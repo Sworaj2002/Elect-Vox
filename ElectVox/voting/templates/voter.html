@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Voter Dashboard | ElectVox</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #f0f4ff, #dfe9f3);
+      margin: 0;
+      padding: 40px 20px;
+      color: #2c3e50;
+    }
+
+    .dashboard-container {
+      max-width: 1000px;
+      margin: auto;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      color: #1c1e4a;
+      margin-bottom: 40px;
+    }
+
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 25px;
+    }
+
+    .card {
+      background: #ffffff;
+      border-radius: 12px;
+      padding: 25px;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.07);
+      transition: transform 0.3s, box-shadow 0.3s;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    }
+
+    .card h2 {
+      margin-top: 0;
+      color: #34495e;
+      font-size: 1.3rem;
+    }
+
+    .card p {
+      flex-grow: 1;
+      color: #555;
+    }
+
+    .btn {
+      margin-top: 15px;
+      padding: 10px 18px;
+      background: #1c1e4a;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      text-align: center;
+      text-decoration: none;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .btn:hover {
+      background: #2e3177;
+    }
+
+    @media (max-width: 600px) {
+      .dashboard-container {
+        padding: 10px;
+      }
+    }
+      .navbar {
+    background: #1c1e4a;
+    padding: 15px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 0 0 10px 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
+
+  .navbar-brand {
+    color: #fff;
+    font-size: 1.6rem;
+    font-weight: bold;
+    letter-spacing: 1px;
+  }
+
+  .navbar-links {
+    list-style: none;
+    display: flex;
+    margin: 0;
+    padding: 0;
+    gap: 20px;
+  }
+
+  .navbar-links li {
+    display: inline;
+  }
+
+  .navbar-links a {
+    color: #ffffffcc;
+    text-decoration: none;
+    font-weight: 500;
+    padding: 8px 14px;
+    border-radius: 6px;
+    transition: background 0.3s, color 0.3s;
+  }
+
+  .navbar-links a:hover {
+    background: #ffffff22;
+    color: #fff;
+  }
+
+  @media (max-width: 768px) {
+    .navbar {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .navbar-links {
+      flex-direction: column;
+      width: 100%;
+      margin-top: 10px;
+    }
+
+    .navbar-links a {
+      width: 100%;
+      display: block;
+    }
+    
+  }
+  .logout-btn {
+  background-color:rgb(246, 32, 32);
+  color: #b30000;
+  font-weight: bold;
+}
+
+  </style>
+</head>
+<body>
+    <nav class="navbar">
+  <div class="navbar-brand">ElectVox</div>
+  <ul class="navbar-links">
+    <li><a href="{% url 'view_election' %}">Election</a></li>
+    <li><a href="{% url 'register-candidate' %}">Register</a></li>
+    <li><a href="{% url 'candidate-status' %}">Status</a></li>
+    <li><a href="{% url 'results' %}">Results</a></li>
+    <li><a href="{% url 'election-history' %}">History</a></li>
+    <li><a href="{% url 'login' %}" class="logout-btn">Logout</a></li>
+  </ul>
+</nav>
+
+  <div class="dashboard-container">
+    <h1>Welcome Voter to ElectVox - {{ user }}</h1>
+
+    <div class="card-grid">
+      <div class="card">
+        <h2>🗳️ View Current Election</h2>
+        <p>Check ongoing election details, rules, and candidates. Cast your vote if voting is active.</p>
+        <a href="{% url 'view_election' %}" class="btn">View Election</a>
+      </div>
+
+      <div class="card">
+        <h2>📋 Register as a Candidate</h2>
+        <p>Submit your candidacy for upcoming elections with Aadhar, voter ID, manifesto, and supporters.</p>
+        <a href="{% url 'register-candidate' %}" class="btn">Register Now</a>
+      </div>
+
+      <div class="card">
+        <h2>🔍 Registration Status</h2>
+        <p>Check whether your candidate registration has been approved, rejected, or is pending review.</p>
+        <a href="{% url 'candidate-status' %}" class="btn">Check Status</a>
+      </div>
+
+      <div class="card">
+        <h2>📊 Election Results</h2>
+        <p>View graphical results and vote breakdown of completed elections you participated in.</p>
+        <a href="{% url 'results' %}" class="btn">View Results</a>
+      </div>
+
+      <div class="card">
+        <h2>📜 Election History</h2>
+        <p>See a record of past elections, including who won, how many voted, and your own participation.</p>
+        <a href="{% url 'election-history' %}" class="btn">History</a>
+      </div>
+
+      <div class="card">
+        <h2>📃 Voting Guidelines</h2>
+        <p>Review the official terms and conditions, voting rules, and privacy policies.</p>
+        <a href="{% url 'rules' %}" class="btn">Read Rules</a>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

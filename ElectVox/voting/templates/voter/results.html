@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>ElectVox - Voter Portal</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f0f2f5;
+      padding: 20px;
+    }
+
+    h1, h2 {
+      text-align: center;
+      color: #2c3e50;
+    }
+
+    .section {
+      background: #fff;
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 30px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    label {
+      display: block;
+      margin-top: 10px;
+      font-weight: bold;
+    }
+
+    input, textarea, select {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    button {
+      margin-top: 15px;
+      padding: 10px 20px;
+      background: #2980b9;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .candidate-card {
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      padding: 10px;
+      margin: 10px 0;
+      display: flex;
+      gap: 15px;
+      background: #ecf0f1;
+      cursor: pointer;
+    }
+
+    .candidate-card img {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+    }
+
+    canvas {
+      max-width: 600px;
+      margin: auto;
+      display: block;
+    }
+
+    .profile-details, .status-box {
+      margin-top: 10px;
+      padding: 10px;
+      background: #f7f7f7;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>ElectVox - Voter Page</h1>
+  <!-- Election Results -->
+  <div class="section">
+    <h2>📊 Current Election Results</h2>
+    <canvas id="resultChart"></canvas>
+  </div>
+
+  <script>
+    // Countdown timer
+    const endTime = new Date("May 21, 2025 18:00:00").getTime();
+    const countdownEl = document.getElementById("countdown");
+    setInterval(() => {
+      const now = new Date().getTime();
+      const diff = endTime - now;
+      if (diff <= 0) {
+        countdownEl.innerText = "Election Ended";
+      } else {
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+        const minutes = Math.floor((diff / (1000 * 60)) % 60);
+        countdownEl.innerText = `${days}d ${hours}h ${minutes}m left`;
+      }
+    }, 1000);
+
+    // Candidate profile preview
+    function showProfile(name) {
+      const profileDiv = document.getElementById("candidate-profile");
+      const profileInfo = document.getElementById("profile-info");
+      let data = {
+        "John Doe": {
+          photo: "https://via.placeholder.com/100",
+          manifesto: "Better education, transparency in decisions.",
+          supporters: ["Alice", "Bob"],
+          reviews: ["Great vision!", "Very dedicated."]
+        },
+        "Jane Smith": {
+          photo: "https://via.placeholder.com/100",
+          manifesto: "Affordable healthcare, green campus.",
+          supporters: ["Mike", "Nina"],
+          reviews: ["Strong leadership!", "Trusted by students."]
+        }
+      };
+      const p = data[name];
+      profileInfo.innerHTML = `
+        <img src="${p.photo}" style="width:100px;border-radius:50%;">
+        <p><strong>Name:</strong> ${name}</p>
+        <p><strong>Manifesto:</strong> ${p.manifesto}</p>
+        <p><strong>Supporters:</strong> ${p.supporters.join(', ')}</p>
+        <p><strong>Voter Reviews:</strong> ${p.reviews.join(', ')}</p>
+      `;
+      profileDiv.style.display = "block";
+    }
+
+    // Registration status mock
+    function checkStatus() {
+      document.getElementById("status-box").style.display = "block";
+    }
+
+    // Current result chart
+    new Chart(document.getElementById('resultChart').getContext('2d'), {
+      type: 'bar',
+      data: {
+        labels: ['John Doe', 'Jane Smith'],
+        datasets: [{
+          label: 'Votes',
+          data: [150, 200],
+          backgroundColor: ['#3498db', '#e74c3c']
+        }]
+      }
+    });
+
+    // History chart
+    new Chart(document.getElementById('historyChart').getContext('2d'), {
+      type: 'bar',
+      data: {
+        labels: ['Jane Smith', 'John Doe'],
+        datasets: [{
+          label: 'Votes',
+          data: [180, 120],
+          backgroundColor: ['#2ecc71', '#9b59b6']
+        }]
+      }
+    });
+  </script>
+  <a href="{% url 'voter_dashboard' %}" class="back-link">← Back to Dashboard</a>
+
+</body>
+</html>

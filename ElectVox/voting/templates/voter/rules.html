@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Voting Rules | ElectVox</title>
+  <style>
+    /* Reset and base */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(to right, #f0f4f8, #dbe8f4);
+      color: #2c2f4a;
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    header {
+      background: #2e3179;
+      color: #ffffff;
+      padding: 30px 20px;
+      text-align: center;
+      box-shadow: 0 4px 14px rgba(46, 49, 121, 0.4);
+    }
+
+    header h1 {
+      font-size: 2.4rem;
+      letter-spacing: 1.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 50px auto 40px;
+      background: #ffffff;
+      border-radius: 16px;
+      padding: 45px 35px;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+    }
+
+    .container h2 {
+      text-align: center;
+      font-size: 2.1rem;
+      color: #2e3179;
+      margin-bottom: 36px;
+      border-bottom: 3px solid #e6e9fb;
+      padding-bottom: 14px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+
+    .rules-list {
+      list-style: none;
+      padding-left: 0;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    .rules-list li {
+      background: #f7f9fc;
+      padding: 20px 24px 20px 48px;
+      border-radius: 12px;
+      margin-bottom: 18px;
+      font-size: 17px;
+      color: #4a4f7d;
+      position: relative;
+      font-weight: 500;
+      box-shadow: 0 2px 6px rgba(46, 49, 121, 0.08);
+      transition: transform 0.3s ease, background-color 0.3s ease;
+      cursor: default;
+      user-select: none;
+    }
+
+    .rules-list li::before {
+      content: "✔";
+      position: absolute;
+      left: 18px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 20px;
+      color: #2e3179;
+      font-weight: 700;
+      text-shadow: 0 0 2px rgba(46, 49, 121, 0.3);
+    }
+
+    .rules-list li:hover {
+      background-color: #e8efff;
+      transform: translateX(8px);
+      box-shadow: 0 6px 18px rgba(46, 49, 121, 0.15);
+    }
+
+    .back-link {
+      display: inline-block;
+      margin: 40px auto 10px;
+      padding: 14px 32px;
+      background-color: #2e3179;
+      color: #fff;
+      font-size: 17px;
+      font-weight: 600;
+      text-decoration: none;
+      border-radius: 10px;
+      box-shadow: 0 4px 15px rgba(46, 49, 121, 0.35);
+      transition: background-color 0.3s ease, box-shadow 0.3s ease;
+      text-align: center;
+      max-width: 240px;
+    }
+
+    .back-link:hover,
+    .back-link:focus {
+      background-color: #474bad;
+      box-shadow: 0 6px 20px rgba(71, 75, 173, 0.6);
+      outline: none;
+    }
+
+    footer {
+      text-align: center;
+      padding: 22px 12px;
+      font-size: 14px;
+      color: #8a8fba;
+      font-weight: 500;
+      letter-spacing: 0.2px;
+      background-color: #f0f4f8;
+      user-select: none;
+    }
+
+    @media (max-width: 600px) {
+      .container {
+        padding: 30px 25px;
+        margin: 40px 15px 30px;
+      }
+
+      .container h2 {
+        font-size: 1.7rem;
+        margin-bottom: 28px;
+      }
+
+      .rules-list li {
+        font-size: 15.8px;
+        padding: 18px 20px 18px 44px;
+      }
+
+      header h1 {
+        font-size: 1.9rem;
+      }
+
+      .back-link {
+        font-size: 16px;
+        padding: 12px 26px;
+        max-width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>ElectVox Voting Platform</h1>
+  </header>
+
+  <main class="container" role="main">
+    <h2>Online Voting Rules</h2>
+    <ul class="rules-list" aria-label="List of voting rules">
+      <li>Each registered voter can cast only one vote per election.</li>
+      <li>Voters must verify their identity using a valid Voter ID and Aadhar number.</li>
+      <li>Votes must be cast within the official election time window.</li>
+      <li>Once submitted, a vote cannot be modified or withdrawn.</li>
+      <li>Only verified candidates are listed on the voting page.</li>
+      <li>Any attempt to manipulate or tamper with the system will result in disqualification.</li>
+      <li>Voter anonymity and data security are strictly enforced.</li>
+      <li>The use of bots, scripts, or third-party tools is strictly prohibited.</li>
+      <li>Disputes will be resolved solely by the election authority’s final decision.</li>
+      <li>Participation indicates acceptance of all terms and rules mentioned above.</li>
+    </ul>
+    <a href="{% url 'voter_dashboard' %}" class="back-link" role="button" aria-label="Back to voter dashboard">← Back to Dashboard</a>
+  </main>
+
+  <footer>
+    &copy; 2025 ElectVox. All rights reserved.
+  </footer>
+
+</body>
+</html>

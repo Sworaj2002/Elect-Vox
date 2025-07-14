@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Candidate Status</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap');
+
+    body {
+      margin: 0;
+      height: 100vh;
+      background: #121212;
+      font-family: 'Open Sans', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #eee;
+      padding: 15px;
+    }
+
+    .container {
+      background: #1e1e1e;
+      padding: 35px 30px;
+      border-radius: 12px;
+      width: 100%;
+      max-width: 400px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.7);
+      text-align: center;
+    }
+
+    h1 {
+      margin-bottom: 28px;
+      font-weight: 600;
+      font-size: 1.9rem;
+      letter-spacing: 1.2px;
+      color: #ffffff;
+    }
+
+    form {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 30px;
+    }
+
+    input[type="text"] {
+      flex-grow: 1;
+      padding: 12px 14px;
+      border-radius: 8px;
+      border: none;
+      font-size: 1rem;
+      background: #333;
+      color: #eee;
+      transition: background 0.3s;
+    }
+    input[type="text"]::placeholder {
+      color: #bbb;
+    }
+    input[type="text"]:focus {
+      background: #444;
+      outline: none;
+      box-shadow: 0 0 6px #4caf50;
+      color: #fff;
+    }
+
+    input[type="submit"] {
+      background: #4caf50;
+      border: none;
+      padding: 0 18px;
+      border-radius: 8px;
+      color: white;
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    input[type="submit"]:hover {
+      background: #43a047;
+    }
+
+    .status-box {
+      border-radius: 10px;
+      padding: 22px;
+      font-weight: 600;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.4);
+      margin-top: 15px;
+      text-align: center;
+    }
+    .Approved {
+      background-color: #388e3c;
+      color: #dcedc8;
+    }
+    .Pending {
+      background-color: #fbc02d;
+      color: #3e2723;
+    }
+    .Rejected, .Error {
+      background-color: #d32f2f;
+      color: #ffebee;
+    }
+    .NotFound {
+      background-color: #616161;
+      color: #e0e0e0;
+      border: 1px solid #9e9e9e;
+    }
+
+    .status-box h2 {
+      margin: 0 0 8px 0;
+      font-size: 1.4rem;
+    }
+    .status-box p {
+      margin: 0;
+      font-weight: 400;
+      font-size: 1rem;
+    }
+
+    .back-btn {
+      display: inline-block;
+      margin-top: 28px;
+      padding: 12px 28px;
+      border-radius: 25px;
+      text-decoration: none;
+      font-weight: 600;
+      color: #4caf50;
+      border: 2px solid #4caf50;
+      transition: background-color 0.3s, color 0.3s;
+    }
+    .back-btn:hover {
+      background-color: #4caf50;
+      color: #121212;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Candidate Status</h1>
+    <form method="post" novalidate>
+      {% csrf_token %}
+      <input type="text" name="voter_id" placeholder="Enter your Voter ID" value="{{ voter_id }}" required />
+      <input type="submit" value="Check" />
+    </form>
+
+    {% if status_message %}
+    <div class="status-box {{ status_message|default:'NotFound' }}">
+      <h2>Status: {{ status_message }}</h2>
+      <p>{{ note_message }}</p>
+    </div>
+    {% endif %}
+
+    <a href="{% url 'voter_dashboard' %}" class="back-btn">&larr; Back to Dashboard</a>
+  </div>
+</body>
+</html>
+
+
+
+
+
+
+{% comment %} <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Candidate Status</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
+
+    /* Reset & base */
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background: #121212;
+      color: #e0e0e0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .container {
+      background: #1e1e1e;
+      border-radius: 16px;
+      padding: 40px 50px;
+      max-width: 460px;
+      width: 100%;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.7);
+      text-align: center;
+      transition: transform 0.3s ease;
+    }
+    .container:hover {
+      transform: translateY(-8px);
+    }
+
+    h1 {
+      font-weight: 700;
+      font-size: 2rem;
+      margin-bottom: 30px;
+      color: #82aaff;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    form {
+      display: flex;
+      gap: 15px;
+      margin-bottom: 35px;
+    }
+    input[type="text"] {
+      flex-grow: 1;
+      padding: 14px 18px;
+      border-radius: 10px;
+      border: none;
+      font-size: 1rem;
+      background-color: #2c2c2c;
+      color: #e0e0e0;
+      box-shadow: inset 0 0 6px rgba(130, 170, 255, 0.4);
+      transition: box-shadow 0.3s ease;
+    }
+    input[type="text"]::placeholder {
+      color: #a0a0a0;
+    }
+    input[type="text"]:focus {
+      outline: none;
+      box-shadow: 0 0 12px #82aaff;
+      background-color: #333;
+    }
+
+    input[type="submit"] {
+      background: #82aaff;
+      border: none;
+      border-radius: 10px;
+      padding: 14px 28px;
+      font-weight: 600;
+      color: #121212;
+      cursor: pointer;
+      font-size: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      box-shadow: 0 6px 15px rgba(130, 170, 255, 0.6);
+      transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    }
+    input[type="submit"]:hover {
+      background: #5a7ddd;
+      box-shadow: 0 8px 25px rgba(90, 125, 221, 0.8);
+    }
+
+    /* Status boxes */
+    .status-box {
+      border-radius: 14px;
+      padding: 28px 30px;
+      margin-top: 20px;
+      font-weight: 600;
+      box-shadow: 0 0 15px rgba(130, 170, 255, 0.3);
+      animation: fadeIn 0.6s ease forwards;
+    }
+
+    .Approved {
+      background: #1b4332;
+      color: #d4f8e8;
+      box-shadow: 0 0 20px #34d399;
+    }
+    .Pending {
+      background: #604e1a;
+      color: #fff7d6;
+      box-shadow: 0 0 20px #facc15;
+    }
+    .Rejected, .Error {
+      background: #63171b;
+      color: #ffd6d6;
+      box-shadow: 0 0 20px #ef4444;
+    }
+    .NotFound {
+      background: #2a2a2a;
+      color: #cbd5e1;
+      box-shadow: 0 0 20px #64748b;
+      font-weight: 700;
+    }
+
+    .status-box h2 {
+      margin: 0 0 10px 0;
+      font-size: 1.8rem;
+      letter-spacing: 0.03em;
+    }
+
+    .status-box p {
+      margin: 0;
+      font-weight: 400;
+      font-size: 1.15rem;
+      color: inherit;
+      opacity: 0.85;
+    }
+
+    /* Back button */
+    .back-btn {
+      display: inline-block;
+      margin-top: 35px;
+      padding: 12px 36px;
+      font-weight: 600;
+      font-size: 1rem;
+      color: #82aaff;
+      border: 2px solid #82aaff;
+      border-radius: 50px;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 12px rgba(130, 170, 255, 0.4);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+    .back-btn:hover {
+      background-color: #82aaff;
+      color: #121212;
+      box-shadow: 0 8px 25px rgba(130, 170, 255, 0.8);
+    }
+
+    /* Fade-in animation */
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(15px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Check Candidate Status</h1>
+    <form method="post" novalidate>
+      {% csrf_token %}
+      <input type="text" name="voter_id" placeholder="Enter your Voter ID" value="{{ voter_id }}" required />
+      <input type="submit" value="Check" />
+    </form>
+
+    {% if status_message %}
+    <div class="status-box {{ status_message }}">
+      <h2>Status: {{ status_message }}</h2>
+      <p>{{ note_message }}</p>
+    </div>
+    {% endif %}
+
+    <a href="{% url 'voter_dashboard' %}" class="back-btn">&larr; Back to Dashboard</a>
+  </div>
+</body>
+</html> {% endcomment %}

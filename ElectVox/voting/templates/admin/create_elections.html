@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Create Election | ElectVox Admin</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap');
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            margin: 0;
+            padding: 40px 20px;
+            color: #333;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+        }
+
+        .container {
+            background: #fff;
+            max-width: 600px;
+            width: 100%;
+            border-radius: 12px;
+            padding: 40px 50px;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+            transition: box-shadow 0.3s ease;
+        }
+        .container:hover {
+            box-shadow: 0 25px 50px rgba(0,0,0,0.25);
+        }
+
+        h1 {
+            text-align: center;
+            color: #4b367c;
+            margin-bottom: 35px;
+            font-weight: 700;
+            letter-spacing: 1.2px;
+        }
+
+        label {
+            display: block;
+            margin-top: 18px;
+            font-weight: 600;
+            color: #5a4a85;
+            font-size: 15px;
+            margin-bottom: 8px;
+            user-select: none;
+        }
+
+        input[type="text"],
+        input[type="date"],
+        input[type="number"],
+        input[type="file"],
+        textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border-radius: 8px;
+            border: 1.8px solid #c7c2db;
+            font-size: 16px;
+            color: #4b367c;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            font-weight: 500;
+        }
+
+        input[type="text"]:focus,
+        input[type="date"]:focus,
+        input[type="number"]:focus,
+        input[type="file"]:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #7960d9;
+            box-shadow: 0 0 8px rgba(121, 96, 217, 0.5);
+        }
+
+        textarea {
+            min-height: 120px;
+            resize: vertical;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        button[type="submit"] {
+            margin-top: 30px;
+            width: 100%;
+            padding: 15px 0;
+            background: linear-gradient(45deg, #7960d9, #4b367c);
+            border: none;
+            border-radius: 12px;
+            color: white;
+            font-size: 20px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(121, 96, 217, 0.6);
+            transition: background 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        button[type="submit"]:hover {
+            background: linear-gradient(45deg, #4b367c, #7960d9);
+            box-shadow: 0 8px 20px rgba(121, 96, 217, 0.9);
+        }
+
+        .back-link {
+            display: block;
+            margin-top: 28px;
+            text-align: center;
+            color: #7960d9;
+            text-decoration: none;
+            font-weight: 600;
+            letter-spacing: 0.8px;
+            transition: color 0.3s ease;
+            user-select: none;
+        }
+        .back-link:hover {
+            color: #4b367c;
+            text-decoration: underline;
+        }
+
+        #candidates_container {
+            margin-top: 25px;
+            padding-top: 15px;
+            border-top: 2px solid #e0dff7;
+        }
+
+        #candidates_container h4 {
+            color: #5a4a85;
+            margin-bottom: 10px;
+            margin-top: 25px;
+            font-weight: 700;
+            border-bottom: 1.5px solid #7960d9;
+            padding-bottom: 4px;
+        }
+
+        input[type="file"] {
+            padding: 5px 10px;
+        }
+
+        /* Responsive */
+        @media (max-width: 650px) {
+            .container {
+                padding: 30px 25px;
+            }
+            button[type="submit"] {
+                font-size: 18px;
+                padding: 13px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Create Election</h1>
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            
+            <label for="name">Election Name:</label>
+            <input type="text" name="name" id="name" required>
+
+            <label for="description">Description:</label>
+            <textarea name="description" id="description" required></textarea>
+
+            <label for="start_date">Start Date:</label>
+            <input type="date" name="start_date" id="start_date" required>
+
+            <label for="end_date">End Date:</label>
+            <input type="date" name="end_date" id="end_date" required>
+
+            <label for="num_candidates">Number of Candidates:</label>
+            <input type="number" name="num_candidates" id="num_candidates" min="1" max="10" required>
+
+            <div id="candidates_container"></div>
+
+            <button type="submit">Create Election</button>
+        </form>
+
+        <a href="{% url 'admin_dashboard' %}" class="back-link">← Back to Dashboard</a>
+    </div>
+
+<script>
+    document.getElementById('num_candidates').addEventListener('input', function () {
+        const num = parseInt(this.value);
+        const container = document.getElementById('candidates_container');
+        container.innerHTML = '';
+
+        if (!num || num < 1) return;
+
+        for (let i = 1; i <= num; i++) {
+            container.innerHTML += `
+                <h4>Candidate ${i}</h4>
+                <label for="candidate_name_${i}">Name:</label>
+                <input type="text" id="candidate_name_${i}" name="candidate_name_${i}" required>
+                <label for="candidate_photo_${i}">Photo:</label>
+                <input type="file" id="candidate_photo_${i}" name="candidate_photo_${i}" accept="image/*" required>
+            `;
+        }
+    });
+</script>
+</body>
+</html>

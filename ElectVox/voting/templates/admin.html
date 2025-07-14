@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Dashboard | ElectVox</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to right, #eef2f7, #d8e0f3);
+      color: #333;
+      padding: 0;
+    }
+
+    /* Navbar */
+    .navbar {
+      background-color: #1c1e4a;
+      color: white;
+      padding: 18px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+
+    .navbar .logo {
+      font-size: 1.6rem;
+      font-weight: bold;
+      letter-spacing: 1px;
+    }
+
+    .navbar .logout-btn {
+      background-color: #f44336;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      font-size: 14px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .navbar .logout-btn:hover {
+      background-color: #d32f2f;
+    }
+
+    .container {
+      max-width: 960px;
+      margin: 60px auto 40px;
+      padding: 0 20px;
+    }
+
+    h1 {
+      text-align: center;
+      color: #2c3e50;
+      margin-bottom: 40px;
+    }
+
+    .card {
+      background: #fff;
+      border-radius: 12px;
+      padding: 25px;
+      margin-bottom: 25px;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+      transition: transform 0.2s ease, box-shadow 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    }
+
+    .card h2 {
+      margin-top: 0;
+      color: #1c1e4a;
+    }
+
+    .card p {
+      font-size: 15px;
+      margin: 10px 0 20px;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 10px 22px;
+      background: #1c1e4a;
+      color: white;
+      text-decoration: none;
+      border-radius: 6px;
+      font-weight: 500;
+      transition: background 0.3s ease;
+    }
+
+    .btn:hover {
+      background: #2e3177;
+    }
+
+    @media (max-width: 600px) {
+      .navbar {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 15px 20px;
+      }
+
+      .navbar .logo {
+        font-size: 1.3rem;
+        margin-bottom: 10px;
+      }
+
+      .container {
+        margin-top: 30px;
+      }
+
+      h1 {
+        font-size: 1.4rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="navbar">
+    <div class="logo">ElectVox Admin Panel</div>
+    <form action="{% url 'login' %}" method="POST">
+      {% csrf_token %}
+      <button class="logout-btn">Logout</button>
+    </form>
+  </div>
+
+  <div class="container">
+    <h1>Welcome, {{ user }}</h1>
+
+    <div class="card">
+      <h2>Create Elections</h2>
+      <p>Schedule new elections.</p>
+      <a href="{% url 'create_elections' %}" class="btn">Create Elections</a>
+    </div>
+
+    <div class="card">
+      <h2>Manage Elections</h2>
+      <p>Manage existing elections.</p>
+      <a href="{% url 'manage_elections' %}" class="btn">Manage Elections</a>
+    </div>
+
+    <div class="card">
+      <h2>Approve Candidate Registrations</h2>
+      <p>Review and approve candidates who have applied to contest in elections.</p>
+      <a href="{% url 'approve_candidates' %}" class="btn">Review Candidates</a>
+    </div>
+
+    <div class="card">
+      <h2>View Voting Results</h2>
+      <p>Check results of completed elections including vote counts.</p>
+      <a href="{% url 'view_results' %}" class="btn">View Results</a>
+    </div>
+
+    <div class="card">
+      <h2>Manage Voter Logs</h2>
+      <p>Track user voting activity, login times, and other actions.</p>
+      <a href="{% url 'voter_logs' %}" class="btn">View Logs</a>
+    </div>
+  </div>
+
+</body>
+</html>
